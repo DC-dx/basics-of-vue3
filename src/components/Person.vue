@@ -10,24 +10,33 @@
 <script lang="ts">
 export default {
     name: "Person",
-    data() {
-        return {
-            name: "John Doe",
-            age: 30,
-            tel: "123-456-7890"
-        }
+    beforeCreate() {
+        console.log('@@@beforeCreate生命周期被调用了');
     },
-    methods: {
-        showTel() {
-            // 为什么要加this？因为tel是data中的属性,需要通过this来访问,否则会报错,提示找不到tel
-            alert(`联系方式：${this.tel}`);
-        },
-        changeName() {
-            this.name = "Jane Smith";
-        },
-        changeAge() {
-            this.age += 1;
+    setup() {
+        // console.log('@@',this); // setup函数中的this是undefined,vue3中已经开始摒弃对this的使用
+
+        console.log('@@@setup函数被调用了');
+        // 这里可以使用Composition API进行逻辑编写
+        // 数据，原来是写在data函数中，此时的name、age、tel都不是响应式的数据
+        let name = '张三'; 
+        let age = 18;   
+        let tel = '13800138000';     
+
+        // 方法
+        function changeName() {
+            name = '李四';  //注意：这里修改name变量，并不会更新到视图中
+            console.log(name);  // name变量的值已经被修改，但name不是响应式的，视图不会更新
         }
+        function changeAge() {
+            age += 1;   //注意：这里修改age变量，并不会更新到视图中
+            console.log(age);  // age变量的值已经被修改，但age不是响应式的，视图不会更新
+        }
+        function showTel() {
+            alert(`联系方式：${tel}`);
+        }
+
+        return { name, age, changeName, changeAge, showTel };
     }
 }
 </script>
