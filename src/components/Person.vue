@@ -1,11 +1,22 @@
 <template lang="">
     <div class="person">
-        <h2>姓名：{{ name }}</h2>
+        <h2>汽车品牌：{{ car.brand }},价值：{{ car.price }}万</h2>
+        <button @click="changePrice">修改汽车价格</button>
+        <hr>
+        <h2>游戏列表：</h2>
+        <ul>
+            <li v-for="game in games" :key="game.id">{{ game.name }}</li>
+        </ul>
+        <button @click="changeFistGame">修改第一个游戏的名字</button>
+        <hr>
+        <h2>测试：{{ obj.a.b.c }}</h2>
+        <button @click='changeClick'>修改obj.a.b.c的值</button>
+        <!-- <h2>姓名：{{ name }}</h2>
         <h2>年龄：{{ age }}</h2>
         <h2>地址：{{ address }}</h2>
         <button @click="changeName">修改名字</button>
         <button @click="changeAge">修改年龄</button>
-        <button @click="showTel">查看联系方式</button>
+        <button @click="showTel">查看联系方式</button> -->
         <!-- <hr>
         <h2>测试：{{a}}</h2>
         <h2>测试：{{c}}</h2>
@@ -18,8 +29,43 @@ export default {
 }
 </script> -->
 
+<script lang="ts" name="Person" setup>
+import { reactive } from 'vue';
+// 数据
+let car = reactive({ brand: '奔驰', price: 100 });
+let games = reactive([
+    { id: 'asdfsdgfggg01', name: '王者荣耀' },
+    { id: 'asdfsdgfggg02', name: '原神' },
+    { id: 'asdfsdgfggg03', name: '三国志' },
+]);
+let obj = reactive({
+    a: {
+        b: {
+            c: 666
+        }
+    }
+})
+
+// 方法
+function changePrice() {
+    car.price += 10;
+    console.log(car.price);
+}
+
+function changeFistGame() {
+    games[0].name = '和平精英';
+    console.log(games);
+}
+
+function changeClick() {
+    obj.a.b.c = 999;
+    console.log(obj.a.b.c);
+}
+
+</script>
+
 <!-- setup语法糖 -->
-<script  lang="ts" name="Person123" setup>
+<!-- <script  lang="ts" name="Person123" setup>
     import { ref } from 'vue';
     // 数据，原来是写在data函数中，此时的name、age、tel都不是响应式的数据
     let name =ref( '张三');
@@ -44,7 +90,7 @@ export default {
     function showTel() {
         alert(`联系方式：${tel}`);
     }
-</script>
+</script> -->
 
 <!-- <script lang="ts">
 export default {
@@ -104,5 +150,9 @@ export default {
 
 button {
     margin: 0 5px;
+}
+
+li {
+    font-size: 20px;
 }
 </style>
