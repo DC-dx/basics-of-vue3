@@ -19,9 +19,9 @@ export default {
         console.log('@@@setup函数被调用了');
         // 这里可以使用Composition API进行逻辑编写
         // 数据，原来是写在data函数中，此时的name、age、tel都不是响应式的数据
-        let name = '张三'; 
-        let age = 18;   
-        let tel = '13800138000';     
+        let name = '张三';
+        let age = 18;
+        let tel = '13800138000';
 
         // 方法
         function changeName() {
@@ -37,6 +37,7 @@ export default {
         }
 
         return { name, age, changeName, changeAge, showTel };
+        // return () => '哈哈'// 注意：直接渲染到页面上
     }
 }
 </script>
