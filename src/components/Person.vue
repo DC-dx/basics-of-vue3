@@ -10,7 +10,7 @@
         <button @click="changeFistGame">修改第一个游戏的名字</button>
         <hr>
         <h2>测试：{{ obj.a.b.c }}</h2>
-        <button @click='changeClick'>修改obj.a.b.c的值</button>
+        <button @click='changeObjClick'>修改obj.a.b.c的值</button>
         <!-- <h2>姓名：{{ name }}</h2>
         <h2>年龄：{{ age }}</h2>
         <h2>地址：{{ address }}</h2>
@@ -57,7 +57,7 @@ function changeFistGame() {
     console.log(games);
 }
 
-function changeClick() {
+function changeObjClick() {
     obj.a.b.c = 999;
     console.log(obj.a.b.c);
 }
