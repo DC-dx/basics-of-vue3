@@ -8,9 +8,6 @@
             <li v-for="game in games" :key="game.id">{{ game.name }}</li>
         </ul>
         <button @click="changeFistGame">修改第一个游戏的名字</button>
-        <hr>
-        <h2>测试：{{ obj.a.b.c }}</h2>
-        <button @click='changeObjClick'>修改obj.a.b.c的值</button>
         <!-- <h2>姓名：{{ name }}</h2>
         <h2>年龄：{{ age }}</h2>
         <h2>地址：{{ address }}</h2>
@@ -30,36 +27,31 @@ export default {
 </script> -->
 
 <script lang="ts" name="Person" setup>
-import { reactive } from 'vue';
+// import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 // 数据
-let car = reactive({ brand: '奔驰', price: 100 });
-let games = reactive([
+let car = ref({ brand: '奔驰', price: 100 });
+let games = ref([
     { id: 'asdfsdgfggg01', name: '王者荣耀' },
     { id: 'asdfsdgfggg02', name: '原神' },
     { id: 'asdfsdgfggg03', name: '三国志' },
 ]);
-let obj = reactive({
-    a: {
-        b: {
-            c: 666
-        }
-    }
-})
+
+let obj =reactive({x:100});
+
+// ref的value就是reactive的对象
+console.log(car);
+console.log(obj);
 
 // 方法
 function changePrice() {
-    car.price += 10;
-    console.log(car.price);
+    car.value.price += 10;
+    console.log(car.value);
 }
 
 function changeFistGame() {
-    games[0].name = '和平精英';
-    console.log(games);
-}
-
-function changeObjClick() {
-    obj.a.b.c = 999;
-    console.log(obj.a.b.c);
+    games.value[0].name = '和平精英';
+    console.log(games.value);
 }
 
 </script>
