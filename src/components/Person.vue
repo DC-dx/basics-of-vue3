@@ -1,13 +1,19 @@
 <template lang="">
     <div class="person">
         <h2>汽车品牌：{{ car.brand }},价值：{{ car.price }}万</h2>
+        <button @click="changeBrand">修改汽车品牌</button>
         <button @click="changePrice">修改汽车价格</button>
+        <button @click="changeCar">修改汽车</button>
         <hr>
+        <h2>当前求和为：{{ sum }}万</h2>
+        <button @click="changeSum">增加1万</button>
+
+        <!-- <hr>
         <h2>游戏列表：</h2>
         <ul>
             <li v-for="game in games" :key="game.id">{{ game.name }}</li>
         </ul>
-        <button @click="changeFistGame">修改第一个游戏的名字</button>
+        <button @click="changeFistGame">修改第一个游戏的名字</button> -->
         <!-- <h2>姓名：{{ name }}</h2>
         <h2>年龄：{{ age }}</h2>
         <h2>地址：{{ address }}</h2>
@@ -27,32 +33,57 @@ export default {
 </script> -->
 
 <script lang="ts" name="Person" setup>
+
+/* - 使用原则：
+** > 1. 若需要一个基本类型的响应式数据，必须使用`ref`。
+** > 2. 若需要一个响应式对象，层级不深，`ref`、`reactive`都可以。
+** > 3. 若需要一个响应式对象，且层级较深，推荐使用`reactive`。*/
+
 // import { reactive } from 'vue';
 import { reactive, ref } from 'vue';
 // 数据
 let car = ref({ brand: '奔驰', price: 100 });
-let games = ref([
-    { id: 'asdfsdgfggg01', name: '王者荣耀' },
-    { id: 'asdfsdgfggg02', name: '原神' },
-    { id: 'asdfsdgfggg03', name: '三国志' },
-]);
+// let car = reactive({ brand: '奔驰', price: 100 });
+let sum = ref(0);
+// let games = ref([
+//     { id: 'asdfsdgfggg01', name: '王者荣耀' },
+//     { id: 'asdfsdgfggg02', name: '原神' },
+//     { id: 'asdfsdgfggg03', name: '三国志' },
+// ]);
 
-let obj =reactive({x:100});
+let obj = reactive({ x: 100 });
 
 // ref的value就是reactive的对象
 console.log(car);
 console.log(obj);
 
 // 方法
-function changePrice() {
-    car.value.price += 10;
-    console.log(car.value);
+function changeBrand() {
+    car.value.brand = '奥迪';
 }
 
-function changeFistGame() {
-    games.value[0].name = '和平精英';
-    console.log(games.value);
+function changePrice() {
+    car.value.price += 10;
 }
+function changeCar() {
+    // car = { brand: '宝马', price: 80 };  // 这样写会报错，因为car是reactive的对象，不能整体替换
+    // car = reactive ({ brand: '宝马', price: 80 }); // 这样写也会报错，因为car是reactive的对象，不能整体替换
+
+    // // 下面这个写法可以更新car对象的属性值
+    // Object.assign(car, { brand: '宝马', price: 80 });
+
+    car.value = { brand: '宝马', price: 80 }; // 这样写是可以的，因为car是ref对象，ref对象可以整体替换
+}
+
+function changeSum() {
+    sum.value++;
+    // sum = ref(9);   // sum的地址被改变了，视图不会更新
+}
+
+// function changeFistGame() {
+//     games.value[0].name = '和平精英';
+//     console.log(games.value);
+// }
 
 </script>
 
