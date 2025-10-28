@@ -1,69 +1,54 @@
 <template lang="">
     <div class="person">
-        <h2>姓名：{{ person.name }}</h2>
-        <h2>年龄：{{ person.age}},{{nl}}</h2>
-        <button @click="changeName">修改名字</button>
-        <button @click="changeAge">修改年龄</button>
+        <!-- :value="firstName" 通过 v-bind:value属性实现的是单向绑定 只能由数据->页面 -->
+       <!-- 姓：<input type="text" value="firstName"><br> -->
+       姓：<input type="text" v-model="firstName"><br>
+       名：<input type="text" v-model="lastName"><br>
+       <!-- 全名：<span>{{firstName}}-{{lastName}}</span> <br> -->
+       全名：<span>{{fullName}}</span> <br>
+       全名：<span>{{fullName}}</span> <br>
+       全名：<span>{{fullName2()}}</span> <br>
+       全名：<span>{{fullName2()}}</span> <br>
+       全名：<span>{{fullName2()}}</span> <br>
+       <button @click="changeFullName">修改全名</button>
     </div>
 </template>
 
 
 <script lang="ts" name="Person" setup>
-import { reactive, toRefs, ref, toRef } from 'vue';
+import { ref, computed } from 'vue';
+let firstName = ref('zhang');
+let lastName = ref('san');
 
-let person = reactive({
-    name: '张三',
-    age: 18
-})
+// // 这样定义的fullName是一个计算属性，且是只读的
+// let fullName = computed(() => {
+//     console.log('计算fullName');    // 没变的话不会再重新计算 有缓存
+//     return firstName.value.slice(0, 1).toUpperCase() + firstName.value.slice(1) + '-' + lastName.value;
+// });
 
-let person2 = ref({
-    name: '张三',
-    age: 18
-})
+// 这样定义的fullName是一个计算属性，可读可写
+let fullName = computed( {
+    get(){
+    return firstName.value.slice(0, 1).toUpperCase() + firstName.value.slice(1) + '-' + lastName.value;
+    },
+    set(val){
+        // 解释const和let的区别: const是常量，不能被重新赋值；let是变量，可以被重新赋值
+        const[str1, str2] = val.split('-');
+        firstName.value = str1 ?? '';
+        lastName.value = str2 ?? '';
+        console.log('set fullName');
+    }
+});
 
-console.log(person);
-console.log(person2);
-
-// 所有keyvalue转refImpl对象
-let { name, age } = toRefs(person); // 解构赋值不会使person变成响应式对象
-
-// 单个keyvalue转refImpl对象
-let nl = toRef(person, 'age');
-console.log(nl);
-console.log(nl.value);
-
-console.log(toRefs(person));
-// name、age变成refImpl对象, 通过.value访问和修改值
-console.log(name);
-console.log(age);
-
-function changeName() {
-    // person.name = '李四';
-    name.value += '~';
-    console.log(name, person.name); // name和person.name是同步变化的
-}
-
-function changeAge() {
-    // person.age += 1;
-    age.value += 1;
-    console.log(age);
+function fullName2() {
+    console.log('计算fullName2');    // 没变的话不会再重新计算 有缓存
+    return firstName.value.slice(0, 1).toUpperCase() + firstName.value.slice(1) + '-' + lastName.value;
+};
+function changeFullName() {
+    // fullName的类型是ComputedRefImpl 不能直接赋值
+    fullName.value='li-si'  // 计算属性是只读的 不能被修改
 }
 
 </script>
 
-<style scoped>
-.person {
-    background-color: skyblue;
-    box-shadow: 0 0 10px;
-    border-radius: 10px;
-    padding: 20px;
-}
-
-button {
-    margin: 0 5px;
-}
-
-li {
-    font-size: 20px;
-}
-</style>
+<style scoped></style>
