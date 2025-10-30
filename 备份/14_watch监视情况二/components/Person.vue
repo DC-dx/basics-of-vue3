@@ -26,6 +26,7 @@ function changeAge() {
     person.value.age += 1;
 }
 function changePerson() {
+    // 地址值发生变化
     person.value = {
         name: '李四',
         age: 20
