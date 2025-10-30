@@ -41,7 +41,7 @@ let fullName = computed( {
 });
 
 function fullName2() {
-    console.log('计算fullName2');    // 没变的话不会再重新计算 有缓存
+    console.log('计算fullName2');    // 会再重新计算 无缓存
     return firstName.value.slice(0, 1).toUpperCase() + firstName.value.slice(1) + '-' + lastName.value;
 };
 function changeFullName() {
