@@ -1,12 +1,11 @@
 <template>
     <div class="app">
-        <Header />
+        <Header/>
         <!-- 导航区 -->
         <div class="navigate">
-            <!-- to的两种写法：字符串、对象 -->
             <RouterLink to="/home" active-class="active">首页</RouterLink>
-            <RouterLink :to="{ name: 'xinwen' }" active-class="active">新闻</RouterLink>
-            <RouterLink :to="{ path: '/about' }" active-class="active">关于</RouterLink>
+            <RouterLink to="/news" active-class="active">新闻</RouterLink>
+            <RouterLink to="/about" active-class="active">关于</RouterLink>
         </div>
         <!-- 展示区 -->
         <div class="main-content">
@@ -23,6 +22,8 @@ import Header from './components/Header.vue';
 </script>
 
 <style>
+
+
 .navigate {
     display: flex;
     justify-content: space-around;
