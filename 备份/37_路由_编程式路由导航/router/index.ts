@@ -25,8 +25,28 @@ const router = createRouter({
             children: [
                 {
                     name: "xiangqing",
+                    // 表示content可传可不传
+                    // params参数
+                    // path: "detail/:id/:title/:content?",
                     path: "detail",
-                    component: Detail
+                    component: Detail,
+
+                    // 第一种写法：将路由收到的所有params参数作为props传给路由组件
+                    // 相当于<Detail :id= :title= :content=>
+                    // props: true
+
+                    // 第二种写法：函数写法，可以自己决定将什么作为props给路由组件
+                    props(route) {
+                        return route.query
+                    }
+                    
+                    // 第三种写法：对象写法，可以自己决定将什么作为props给路由组件
+                    // 参数值被写死
+                    // props:{
+                    //     id:1,
+                    //     title:"sd",
+                    //     content:''
+                    // }
                 }
             ]
         },
