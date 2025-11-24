@@ -15,7 +15,11 @@ import { storeToRefs } from 'pinia';
 import { useLoveTalkStore } from '@/store/loveTalk';
 const loveTalkStore = useLoveTalkStore();
 const { loveTalkList } = storeToRefs(loveTalkStore);
-
+loveTalkStore.$subscribe((mutate,state)=>{
+    console.log("loveTalkStore里面保存的数据发生了变化\n",mutate,'\n',state);
+    // json.stringify() 把对象转换为字符串
+    localStorage.setItem("loveTalkState",JSON.stringify(state));
+})
 async function getLoveTalk() {
     await loveTalkStore.getLoveTalk();
 }
